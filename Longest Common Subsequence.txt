@@ -1,0 +1,55 @@
+//gcc 5.4.0
+
+#include  <stdio.h>
+#include  <stdlib.h>
+#include  <string.h>
+
+int max(int a, int b){
+    return (a > b ? a : b);
+}
+
+void lcs(char *c, char *d, int p, int q){
+    int L[p+1][q+1];
+    
+    for(int i = 0; i <= p; i++){
+        for(int j = 0; j <= q; j++){
+            if(i == 0 || j == 0){
+                L[i][j] = 0;
+            }
+            else if(c[i-1] == d[j-1]){
+                L[i][j] = L[i-1][j] + 1;
+               
+            }
+            else{
+                L[i][j] = max(L[i-1][j],L[i][j-1]);
+            }
+        }
+    }
+    int size = L[p][q];
+    char lcs[size+1];
+    int i = p,j = q;
+    while(i > 0 && j > 0){
+        if(c[i-1] == d[j-1]){
+            lcs[size - 1] = c[i-1];
+            i--;
+            j--;
+            size--;
+        }
+        else if(L[i-1][j] > L[i][j-1]){
+            i--;
+        }else
+            j--;
+    }
+    
+    printf("%s",lcs);
+}
+
+int main(void)
+{
+ char a[] = "BACBADQ";
+ char b[] = "ABAZDCQ";
+    int m = strlen(a);
+    int n = strlen(b);
+    lcs(a,b,m,n);
+    return 0;
+}
