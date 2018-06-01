@@ -1,0 +1,57 @@
+//gcc 5.4.0
+
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+struct Node *newnode(int value){
+    struct Node *new =(struct Node *)malloc(sizeof(struct Node)); 
+    new->data = value;
+    new->left = NULL;
+    new->right = NULL;
+    return new;
+    }
+ void Inorder(struct Node *root){
+ if(root == NULL)
+    return;
+    Inorder(root->left);
+    printf("%d",root->data);
+    Inorder(root->right);
+ }    
+void Preorder(struct Node *root){
+ if(root == NULL)
+     return;
+    printf("%d",root->data);
+    Preorder(root->left);
+    Preorder(root->right);
+    }
+
+void Postorder(struct Node *root){
+if(root == NULL)
+    return;
+    Postorder(root->left);
+    Postorder(root->right);
+    printf("%d",root->data);
+
+}
+int main(){
+   struct Node *root = newnode(5);
+    root->left = newnode(3);
+    root->right = newnode(6);
+    root->left->left = newnode(1);
+    root->left->right = newnode(4);
+    root->right->left = newnode(2);
+    root->right->right = newnode(7);
+    root->left->left->left = newnode(0);
+    root->right->right->right = newnode(8); 
+    Inorder(root);
+    printf("\n");
+    Preorder(root);
+    printf("\n");
+    Postorder(root);
+    return 1;
+}

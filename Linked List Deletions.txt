@@ -1,0 +1,62 @@
+//gcc 5.4.0
+
+#include  <stdio.h>
+#include  <stdlib.h>
+
+struct List{
+ int data;
+ struct List *next;
+};
+
+int delete(struct List **head,int position){
+int k = 1;
+    if(*head == NULL){
+    printf("The List cannot be empty");
+    }
+    struct List *temp = *head;
+    struct List *q;
+    if(position == 1){
+    (*head) = (*head) -> next;
+        free(temp);
+    }
+    else{
+        while(temp!=NULL && k < position){
+            k++;
+            q = temp;
+            temp = temp->next;
+            }
+        if(temp == NULL){
+        printf("The position cannot be empty");
+            }
+        else{
+        q->next = temp->next;
+            free(temp);
+        }
+    }
+}   
+void push(struct List **head,int value){
+    struct List *newnode = (struct List *)malloc(sizeof(struct List));
+    newnode->next = *head;
+    newnode->data = value;
+    *head = newnode;
+   
+}
+void printlist(struct List *n){ 
+while(n!=NULL){
+        printf(" \n%d\t",n->data);
+    n = n->next;
+    }
+    
+}
+
+int main(){
+    struct List *head = NULL;
+    push(&head,1);
+    push(&head->next,2);
+    push(&head->next->next,3);
+    push(&head->next->next->next,4);
+    delete(&head,2);
+    printlist(head);
+  
+    return 0;
+}

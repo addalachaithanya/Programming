@@ -1,0 +1,90 @@
+//gcc 5.4.0
+
+#include  <stdio.h>
+#include  <stdlib.h>
+#define bool int
+struct tnode{
+    struct tnode *left;
+    struct tnode *right;
+    int data;
+    
+};
+struct snode{
+    struct tnode *t;
+    struct snode *next;
+};
+    void push(struct snode **top_ref,struct tnode *t);
+struct tnode *pop(struct snode **top_ref);
+bool isEmpty(struct snode *top);
+
+void inorder(struct tnode *root){
+    struct tnode *current = root;
+    struct snode *st = NULL;
+     bool empty = 0;
+    while(!empty)
+    {
+        if(current!=NULL){
+        push(&st,current);
+            current = current->left;
+        }else{
+            if(!isEmpty(st)){
+                current = pop(&st);
+                printf("%d",current ->data);
+                current = current->right;
+            }
+        else
+            empty = 1;
+        }
+        }
+}
+void push(struct snode **top_ref,struct tnode *t){
+struct snode *new_tnode =(struct snode *)malloc(sizeof(struct snode));
+    if(new_tnode == NULL){
+        printf("stack overflow");
+    getchar();
+    exit(0);
+    } 
+    new_tnode->t = t;
+    new_tnode->next = *top_ref;
+    (*top_ref) = new_tnode;
+}
+
+bool isEmpty(struct snode *top){
+return (top == NULL)? 1 : 0;
+}
+
+struct tnode *pop(struct snode **top_ref){
+    struct tnode *res;
+    struct snode *top;
+    if(isEmpty(*top_ref)){
+       printf("stack underflow");
+       getchar();
+       exit(0);
+    }else{
+       top = *top_ref;
+       res = top->t;
+       *top_ref = top->next;
+       free(top);
+        return res;
+}
+}
+struct tnode *treenode(int data){
+ struct tnode *head = (struct tnode *)malloc(sizeof(struct tnode));
+    head->data = data;
+    head->left = NULL;
+    head->right = NULL;
+    return head;
+}
+int main()
+{
+  struct tnode *root = treenode(1);
+  root->left        = treenode(2);
+  root->right       = treenode(3);
+  root->left->left  = treenode(4);
+  root->left->right = treenode(5); 
+ 
+  inorder(root);
+ 
+  getchar();
+  return 0;
+}

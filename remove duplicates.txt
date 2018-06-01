@@ -1,0 +1,31 @@
+//gcc 5.4.0
+
+#include  <stdio.h>
+#include  <string.h>
+
+int removeduplicates(char *string){
+     int i;int j; int k = 0;
+     char temp[100];
+     int len = strlen(string);
+    
+    for(i = 0,j = 1; i <= len-1, j <= len; i++,j++){
+        if(string[i] != string[j]){
+            temp[k] = string[i];
+                k++;
+            }
+        
+           }   /* for(i = 1; i <= len-1; i++){
+        if(temp[0] != string[i]){  
+     temp[k] = string[i];
+     k++;
+     } */    
+    printf("%s",temp);
+}
+
+int main(){
+    char str[100] = "aaaaaaaaaaaaaaaaabbbbbbbbbbbbbbccccccdddddddddeee";
+    removeduplicates(str);
+   return 1;
+}
+        
+        

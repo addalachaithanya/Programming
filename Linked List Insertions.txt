@@ -1,0 +1,63 @@
+//gcc 5.4.0
+
+#include  <stdio.h>
+#include  <stdlib.h>
+
+struct List{
+ int value;
+ struct List *next;
+};
+
+void insertbefore(struct List **head,int data){
+    struct List *newnode = (struct List *)malloc(sizeof(struct List));
+    newnode->value = data;
+    newnode->next = (*head);
+    (*head) = newnode;
+}
+
+int insertatend(struct List **head,int data){
+    struct List *last = *head;
+    struct List *newnode = (struct List *)malloc(sizeof(struct List));
+    newnode->value = data;
+    newnode->next = NULL;
+    if(head == NULL)
+        *head = newnode;
+     while(last->next != NULL)
+        last = last->next;
+    last->next = newnode;
+    return 1;
+}
+
+int insertinthemiddle(struct List *prev,int data){
+    struct List *newnode = (struct List*)malloc(sizeof(struct List));
+    if(prev == NULL)
+    {
+        printf("It cannot be empty");
+        return 1;
+    }
+
+    newnode->value = data;
+    newnode->next = prev->next;
+    prev->next = newnode;
+}
+void printlist(struct List *n){
+    while(n!=NULL){
+        printf(" %d\t",n->value);
+    n = n->next;
+}
+}
+
+int main(){
+struct List *head = NULL;
+    insertbefore(&head,4);
+    insertbefore(&head,3);
+    insertbefore(&head,2);
+    insertbefore(&head,1);
+    insertbefore(&head,0);
+    insertbefore(&head,8);
+    insertinthemiddle(head,9);
+    insertatend(&head,10);
+    insertatend(&head,11);
+    printlist(head);
+    return 0;
+}

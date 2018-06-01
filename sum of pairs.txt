@@ -1,0 +1,24 @@
+
+#include  <stdio.h>
+#include  <malloc.h>
+
+int main()
+{
+    int A[4] = {3,4,5,6};
+    int x = 8;
+    int Sum = 0,i = 0;
+    int n = sizeof(A)/sizeof(A[0]);
+    for(int k = i; k < n; k++){
+        for(int j = k+1; j < n; j++){
+           Sum = A[k] + A[j];
+           if(Sum == x){
+               printf("\nthe pair can be found: %d %d\n",A[k],A[j]);
+           }
+        }
+    }
+}
+        
+    
+        
+
+    

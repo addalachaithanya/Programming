@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct List{
+    int data;
+    struct List *next;
+};
+
+int newnode(struct List **head,int newdata){
+    struct List *newnode = (struct List*)malloc(sizeof(struct List));
+    newnode->data = newdata;
+    newnode->next = *head;
+    *head = newnode;
+}
+int ReverseList(struct List **head){
+   struct List *prev = NULL;
+    struct List *current = *head;
+    struct List *nextnode;
+    while(current != NULL){
+        nextnode = current->next;
+        current->next = prev;
+        prev = current;
+        current = nextnode;
+         }
+*head = prev;
+}
+int printlist(struct List *n){
+    while(n != NULL){
+        printf("%d\t",n->data);
+        n = n->next; 
+    }
+}
+
+int main(){
+    struct List *head = NULL;
+    newnode(&head,7);
+    newnode(&head,6);
+    newnode(&head,5);
+    newnode(&head,4);
+    newnode(&head,3);
+    newnode(&head,2);
+    newnode(&head,1);
+    printlist(head);
+    ReverseList(&head);
+    printf("\n");
+    printlist(head);
+    return 1;
+}
+
+    

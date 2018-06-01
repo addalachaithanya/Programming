@@ -1,0 +1,96 @@
+//gcc 5.4.0
+
+#include  <stdio.h>
+#include  <stdlib.h>
+struct tree *minvalue(struct tree *root);
+
+struct tree{
+    int data;
+    struct tree *left;
+    struct tree *right;
+    struct tree *parent;
+};
+
+struct tree *addnode(int data){
+    struct tree *newnode = (struct tree *)malloc(sizeof(struct tree));
+    newnode->data = data;
+    newnode->left = NULL;
+    newnode->right = NULL;
+    newnode->parent = NULL;
+    return newnode;
+}
+struct tree *insert(struct tree *root, int data){
+    if(root == NULL){
+        return addnode(data);
+    }else{
+        struct tree *temp;
+        if(data <= root->data){
+            temp = insert(root->left,data);
+            root->left  = temp;
+            temp->parent = root;
+        }else{
+            temp = insert(root->right,data);
+            root->right = temp;
+            temp->parent = root;
+        }
+    }
+    return root;
+
+}
+
+
+struct tree *minvalue(struct tree *root){
+    struct tree *cur = root;
+    if(cur == NULL){
+        return NULL;
+    }
+    while(cur->left != NULL){
+        cur = cur->left;
+    }
+    return cur;
+}
+struct tree* Findnode(struct tree *root, int data) {
+	if(root == NULL) 
+        return NULL;
+	else if(root->data == data) 
+        return root;
+	else if(root->data < data) 
+        return Findnode(root->right,data);
+	else 
+        return Findnode(root->left,data);
+}
+
+struct tree *successor(struct tree *root, int data){
+    struct tree *node = Findnode(root,data);
+    if(node == NULL){
+    return NULL;
+    }
+    if(node->right != NULL){
+        return minvalue(node->right);
+    }
+    struct tree *par = node->parent;
+    
+    while(par != NULL && node == par->right){
+        node = par;
+        par = par->parent;
+    }
+    return par;
+}
+
+int main(){
+    struct tree *temp = NULL;
+    struct tree *success;
+   struct tree *root = insert(root, 20);
+      root = insert(root, 8);
+      root = insert(root, 22);
+      root = insert(root, 4);
+      root = insert(root, 12);
+      root = insert(root, 10);  
+      root = insert(root, 14);
+      temp = root->left->right->right;
+      success = successor(root,14);
+      printf("%d\n",success->data);
+     return 0;
+    
+}
+

@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct DLL{
+    int data;
+    struct DLL *prev;
+    struct DLL *next;
+};
+void newnode(struct DLL **head, int newdata){
+    struct DLL *newnode = (struct DLL *)malloc(sizeof(struct DLL));
+    newnode->data  = newdata;
+    newnode->next = (*head);
+    newnode->prev = NULL;
+    if((*head) != NULL){
+        (*head)->prev = newnode;
+    }
+    *head = newnode;   
+}
+void delete(struct DLL **head,int position){
+     struct DLL *q;
+    int k = 1;
+    struct DLL *temp = *head;
+    if(position == 1){
+       *head = (*head)->next;
+        if(*head != NULL)
+        (*head)->prev = NULL;
+        free(temp); 
+        return;
+    }
+    
+    
+      while(temp->next != NULL && k < position){
+        temp = temp->next;
+        k++;
+    }
+    
+    if(k != (position)){
+        printf("Position does not exist\n");
+    }
+    q = temp->prev;
+    q->next = temp->next;
+    if(temp->next != NULL)
+        temp->next->prev = q;
+        free(temp);
+ return; 
+    }
+    
+
+void printlist(struct DLL *n){
+    while(n != NULL){
+        printf("%d\t",n->data);
+        n = n->next;
+    }
+}
+
+int main(){
+    struct DLL *head = NULL;
+    newnode(&head,4);
+    newnode(&head,3);
+    newnode(&head,2);
+    newnode(&head,1);
+   delete(&head,1);
+    printlist(head);
+    return 1;
+}

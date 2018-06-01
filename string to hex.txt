@@ -1,0 +1,21 @@
+//gcc 5.4.0
+
+#include  <stdio.h>
+#include  <string.h>
+int main(void)
+{
+    char mac[] = "0010a4000002";
+    char temp[3];
+    int n = sizeof(mac)/(sizeof(mac[0]));
+    int num[7];
+    int j = 0;
+    for(int i = 0; i < n; i = i+2){
+        memcpy(&temp[0],&mac[i],2);
+       // printf("%d\n",temp);
+        num[j] = (int)strtol(temp, NULL, 16);
+        j++;
+    }
+    for(int i = 0; i < 7; i++) 
+    printf("%02x",num[i]);
+    return 0;
+}
