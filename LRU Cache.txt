@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Lrucache{
+    int ca_size;
+    list<int> dq;
+    unordered_map<int, list<int>::iterator> m;
+    
+    public:
+    Lrucache(int n){
+        ca_size = n;
+    }
+    
+    void referinQ(int x){
+        if(!m.count(x)){        // If element is not present in queue
+            if(dq.size() == ca_size){ // It has to be added by removing the last element
+                int last = dq.back();
+                dq.pop_back();
+                m.erase(last);
+            }
+        }else{
+                dq.erase(m[x]);
+        }
+        dq.push_front(x);   // Update the queue
+        m[x] = dq.begin();  // Update the index of element
+   }
+    void display(){
+        for(auto it = dq.begin(); it != dq.end(); it++){
+            cout<<*it<<"\n";
+        }
+    }
+
+};
+int main(){
+    Lrucache ca(4);
+    
+    ca.referinQ(1);
+    ca.referinQ(4);
+    ca.referinQ(7);
+    ca.referinQ(3);
+    ca.referinQ(4);
+    ca.referinQ(7);
+    ca.referinQ(6);
+    ca.referinQ(8);
+    ca.referinQ(8);
+    ca.referinQ(2);
+    ca.referinQ(0);
+    ca.referinQ(2);
+    ca.display();
+    return 0; 
+}
